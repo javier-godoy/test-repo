@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.flowingcode.vaadin.addons</groupId>
-    <artifactId>template-addon</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <name>Template Add-on</name>
-    <description>Template Add-on for Vaadin Flow</description>
+    <artifactId>image-crop-addon</artifactId>
+    <version>1.1.1-SNAPSHOT</version>
+    <name>Image Crop Add-on</name>
+    <description>Image Crop Add-on for Vaadin Flow</description>
     <url>https://www.flowingcode.com/en/open-source/</url>
 
     <properties>
@@ -19,7 +17,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <drivers.dir>${project.basedir}/drivers</drivers.dir>
-        <jetty.version>11.0.20</jetty.version>
+        <jetty.version>11.0.21</jetty.version>
         <flowingcode.commons.demo.version>4.1.0</flowingcode.commons.demo.version>
         <frontend.hotdeploy>true</frontend.hotdeploy>
     </properties>
@@ -29,7 +27,7 @@
         <url>https://www.flowingcode.com</url>
     </organization>
 
-    <inceptionYear>2025</inceptionYear>
+    <inceptionYear>2024</inceptionYear>
     <licenses>
         <license>
             <name>Apache 2</name>
@@ -39,9 +37,9 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/FlowingCode/AddonStarter24</url>
-        <connection>scm:git:git://github.com/FlowingCode/AddonStarter24.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:/FlowingCode/AddonStarter24.git</developerConnection>
+        <url>https://github.com/FlowingCode/ImageCrop</url>
+        <connection>scm:git:git://github.com/FlowingCode/ImageCrop.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:/FlowingCode/ImageCrop.git</developerConnection>
         <tag>master</tag>
     </scm>
 
@@ -154,7 +152,13 @@
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>5.9.1</version>
+            <version>5.9.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.12.4</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -227,14 +231,8 @@
                     <licenseName>apache_v2</licenseName>
                     <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
                     <excludes>
-                        <exclude>**/main/dev-bundle/**</exclude>
-                        <exclude>**/main/bundles/**</exclude>
-                        <exclude>**/main/frontend/**</exclude>
-                        <exclude>**/main/frontend/**</exclude>
+                        <exclude>**/dev-bundle/**</exclude>
                     </excludes>
-                    <extraExtensions>
-                        <tsx>java</tsx>
-                    </extraExtensions>
                 </configuration>
             </plugin>
             <plugin>
@@ -313,9 +311,9 @@
                         <configuration>
                             <quiet>true</quiet>
                             <doclint>none</doclint>
-							<failOnWarnings>true</failOnWarnings>
+                            <failOnWarnings>true</failOnWarnings>
                             <links>
-                                <link>https://javadoc.io/doc/com.vaadin/vaadin-platform-javadoc/${vaadin.version}</link>								
+                                <link>https://javadoc.io/doc/com.vaadin/vaadin-platform-javadoc/${vaadin.version}</link>
                             </links>
                         </configuration>
                     </plugin>
@@ -373,7 +371,7 @@
                         <artifactId>jetty-maven-plugin</artifactId>
                         <version>${jetty.version}</version>
                         <configuration>
-                            <scanIntervalSeconds>0</scanIntervalSeconds>
+                            <scan>0</scan>
                             <supportedPackagings>
                                 <supportedPackaging>jar</supportedPackaging>
                             </supportedPackagings>
@@ -493,7 +491,6 @@
                                         <exclude>**/it/*</exclude>
                                         <exclude>**/DemoView.class</exclude>
                                         <exclude>**/DemoLayout.class</exclude>
-                                        <exclude>**/AppShellConfiguratorImpl.class</exclude>
                                     </excludes>
                                 </configuration>
                             </execution>
@@ -502,9 +499,12 @@
                 </plugins>
             </build>
         </profile>
-        
+
         <profile>
             <id>demo-war</id>
+            <properties>
+                <vaadin.productionMode>true</vaadin.productionMode>
+            </properties>
             <dependencies>
                 <dependency>
                     <groupId>com.vaadin</groupId>
@@ -541,13 +541,28 @@
                           </goals>
                           <configuration>
                              <target name="copy-demo">
-                                <copy todir="${project.basedir}/src/main">
+                                <copy todir="${project.basedir}/src/main" failonerror="false">
                                     <fileset dir="${project.basedir}/src/test">
                                         <include name="**"/>
                                         <exclude name="**/it/*"/>
                                         <exclude name="**/test/*"/>
                                     </fileset>
                                 </copy>
+                                <copy todir="${project.basedir}/src/main/frontend" failonerror="false">
+                                    <fileset dir="${project.basedir}/src/main/resources/META-INF/frontend">
+                                        <include name="**"/>
+                                    </fileset>
+                                </copy>
+                                <copy todir="${project.basedir}/src/main/frontend" failonerror="false">
+                                    <fileset dir="${project.basedir}/src/main/resources/META-INF/resources/frontend">
+                                        <include name="**"/>
+                                    </fileset>
+                                </copy>
+                                <delete>
+                                    <fileset dir="${project.basedir}/src/main/resources/META-INF/frontend">
+                                        <include name="**/*.css"/>
+                                    </fileset>
+                                </delete>
                              </target>
                           </configuration>
                        </execution> 

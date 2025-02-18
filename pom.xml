@@ -550,7 +550,7 @@
                                 </copy>
 								<copy todir="${project.basedir}/src/main/resources" failonerror="false">
                                     <fileset dir="${project.basedir}/src/test/resources"/>
-                                </delete>
+                                </copy>
                                 <copy todir="${project.basedir}/src/main/resources/META-INF/resources/frontend" failonerror="false">
                                     <fileset dir="${project.basedir}/src/main/resources/META-INF/frontend"/>
                                 </copy>

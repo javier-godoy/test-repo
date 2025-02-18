@@ -548,22 +548,22 @@
                                         <exclude name="**/test/*"/>
                                     </fileset>
                                 </copy>
-								<copy todir="${project.basedir}/src/main/resources/META-INF/resources/frontend" failonerror="false">
+                                <copy todir="${project.basedir}/src/main/resources/META-INF/resources/frontend" failonerror="false">
                                     <fileset dir="${project.basedir}/src/main/resources/META-INF/frontend"/>
-									<fileset dir="${project.basedir}/src/test/resources/META-INF/frontend"/>
-									<fileset dir="${project.basedir}/src/test/resources/META-INF/resources/frontend"/>
-								</copy>
-								<delete failonerror="false">
-									<fileset dir="${project.basedir}/src/main/resources/META-INF/frontend"/>
-									<fileset dir="${project.basedir}/src/test/resources/META-INF/frontend"/>
-									<fileset dir="${project.basedir}/src/test/resources/META-INF/resources/frontend"/>
+                                    <fileset dir="${project.basedir}/src/test/resources/META-INF/frontend"/>
+                                    <fileset dir="${project.basedir}/src/test/resources/META-INF/resources/frontend"/>
+                                </copy>
+                                <delete failonerror="false">
+                                    <fileset dir="${project.basedir}/src/main/resources/META-INF/frontend"/>
+                                    <fileset dir="${project.basedir}/src/test/resources/META-INF/frontend"/>
+                                    <fileset dir="${project.basedir}/src/test/resources/META-INF/resources/frontend"/>
                                 </delete>
-								<copy todir="${project.basedir}/src/webapp" failonerror="false">
+                                <copy todir="${project.basedir}/src/webapp" failonerror="false">
                                     <fileset dir="${project.basedir}/src/main/resources/META-INF/resources">
                                         <include name="**"/>
-                                        <exclude name="/frontend"/>										
-									</fileset>
-									<fileset dir="${project.basedir}/src/test/resources/META-INF/resources"/>
+                                        <exclude name="/frontend"/>
+                                    </fileset>
+                                    <fileset dir="${project.basedir}/src/test/resources/META-INF/resources"/>
                                 </copy>
                              </target>
                           </configuration>

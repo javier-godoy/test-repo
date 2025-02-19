@@ -38,7 +38,7 @@ public class BasicImageCropDemo extends VerticalLayout {
   private Div croppedResultDiv = new Div();
 
   public BasicImageCropDemo() {
-    add(new Span("Select a portion of the picture to crop!!! "));
+    add(new Span("Select a portion of the picture to crop: "));
 
     Image image = new Image("images/empty-plant.png", "image to crop");
     ImageCrop imageCrop = new ImageCrop(image);

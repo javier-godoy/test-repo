@@ -1,6 +1,6 @@
 /*-
  * #%L
- * Template Add-on
+ * Image Crop Add-on
  * %%
  * Copyright (C) 2024 Flowing Code
  * %%

@@ -4,6 +4,9 @@ on:
   pull_request:
 
 jobs:
-  check-commits:    
-#    uses: FlowingCode/GithubActions/.github/workflows/check-commits.yml@main
-     uses: FlowingCode/GithubActions/.github/workflows/indentation-linter.yml@test
+# check-commits:    
+#   uses: FlowingCode/GithubActions/.github/workflows/check-commits.yml@main
+  indentation-linter:
+    permissions:
+      contents: write
+    uses: FlowingCode/GithubActions/.github/workflows/indentation-linter.yml@test

@@ -10,3 +10,8 @@ jobs:
     permissions:
       contents: write
     uses: FlowingCode/GithubActions/.github/workflows/indentation-linter.yml@test
+    with:
+      config: |
+        {
+          "java": { "type": "space", "size": 4 }
+        }

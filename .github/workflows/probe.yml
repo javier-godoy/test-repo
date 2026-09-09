@@ -1,0 +1,23 @@
+name: Probe protection visibility
+
+on:
+  push:
+    branches: [ test/probe-protection ]
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: What can GITHUB_TOKEN see?
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for p in "branches/master/protection" "rules/branches/master" "rulesets"; do
+            code=$(curl -s -o /tmp/body.json -w '%{http_code}' \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/${{ github.repository }}/$p")
+            echo "PROBE $p -> HTTP $code : $(head -c 160 /tmp/body.json)"
+          done

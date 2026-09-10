@@ -88,3 +88,5 @@ To do so, just add ```com.flowingcode``` to the ```vaadin.allowed-packages``` pr
 More information on Spring scanning configuration [here](https://vaadin.com/docs/latest/integrations/spring/configuration/#configure-the-scanning-of-packages).
 
 <!-- test/all-invalid: every commit message on this branch is invalid on purpose. -->
+
+<!-- test/all-invalid-report-none: every commit message on this branch is invalid on purpose. -->

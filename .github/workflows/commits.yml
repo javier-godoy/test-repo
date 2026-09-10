@@ -5,4 +5,9 @@ on:
 
 jobs:
   check-commits:
-    uses: FlowingCode/GithubActions/.github/workflows/check-commits.yml@main
+    # The called workflow asks for checks: write, which it cannot be granted
+    # unless this job has it: without this block the run fails at startup.
+    permissions:
+      contents: read
+      checks: write
+    uses: FlowingCode/GithubActions/.github/workflows/check-commits.yml@feature/wip-action-required

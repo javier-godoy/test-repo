@@ -9,6 +9,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    # Called directly, with the default report: fail, so that the action itself
+    # Called directly, with the default enforce: true, so that the action itself
     # writes the annotations and fails the check.
     - uses: FlowingCode/action-conventional-commits@feature/wip-action-required

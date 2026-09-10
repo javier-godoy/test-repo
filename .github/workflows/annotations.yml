@@ -1,0 +1,16 @@
+name: Probe annotation levels
+
+on:
+  push:
+    branches: [ test/probe-protection ]
+
+jobs:
+  annotate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Emit all three levels, then exit 0
+        run: |
+          echo "::notice::probe notice level"
+          echo "::warning::probe warning level"
+          echo "::error::probe error level"
+          exit 0

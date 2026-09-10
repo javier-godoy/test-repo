@@ -5,9 +5,11 @@ on:
 
 jobs:
   check-commits:
-    # The called workflow asks for checks: write, which it cannot be granted
-    # unless this job has it: without this block the run fails at startup.
-    permissions:
-      contents: read
-      checks: write
-    uses: FlowingCode/GithubActions/.github/workflows/check-commits.yml@feature/wip-action-required
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    # The reusable workflow in FlowingCode/GithubActions points at another branch of the
+    # action, so the branch under test is called directly. It reports for itself: this
+    # branch of the action has no report input.
+    - uses: FlowingCode/action-conventional-commits@fix/read-all-commits

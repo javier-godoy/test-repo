@@ -5,4 +5,10 @@ on:
 
 jobs:
   check-commits:
-    uses: FlowingCode/GithubActions/.github/workflows/check-commits.yml@main
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    # Called directly, with the default enforce: true, so that the action itself
+    # writes the annotations and fails the check.
+    - uses: FlowingCode/action-conventional-commits@feature/wip-action-required

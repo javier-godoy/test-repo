@@ -5,4 +5,7 @@ on:
 
 jobs:
   check-commits:
-    uses: FlowingCode/GithubActions/.github/workflows/check-commits.yml@main
+    permissions:
+      contents: read
+      checks: write
+    uses: FlowingCode/GithubActions/.github/workflows/check-commits.yml@feature/wip-action-required

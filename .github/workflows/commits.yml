@@ -5,4 +5,10 @@ on:
 
 jobs:
   check-commits:
-    uses: FlowingCode/GithubActions/.github/workflows/check-commits.yml@main
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3.7.0
+
+    # Called directly, with the default enforce: true, so that the action itself
+    # writes the annotations and fails the check.
+    - uses: FlowingCode/action-conventional-commits@master
